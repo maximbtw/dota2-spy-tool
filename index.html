@@ -72,6 +72,99 @@
         .checkbox-btn input:checked + span { color: #fff; font-weight: bold; }
         .checkbox-btn:has(input:checked) { background: #555; border-color: #888; }
 
+        /* Checkbox wrapper style */
+        .checkbox-wrapper-23 {
+            --size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .checkbox-wrapper-23 *,
+        .checkbox-wrapper-23 *:after,
+        .checkbox-wrapper-23 *:before {
+            box-sizing: border-box;
+        }
+
+        .checkbox-wrapper-23 input {
+            position: absolute;
+            opacity: 0;
+            width: var(--size);
+            height: var(--size);
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .checkbox-wrapper-23 input:checked + label svg path {
+            stroke-dashoffset: 0;
+        }
+
+        .checkbox-wrapper-23 input:focus + label {
+            transform: scale(1.03);
+        }
+
+        .checkbox-wrapper-23 input + label {
+            display: block;
+            border: 2px solid #666;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all .2s ease;
+            background: #1a1a1a;
+        }
+
+        .checkbox-wrapper-23 input:checked + label {
+            border-color: #ec3d06;
+            background: rgba(236, 61, 6, 0.1);
+            box-shadow: 0 0 12px rgba(236, 61, 6, 0.4);
+        }
+
+        .checkbox-wrapper-23 input + label:active {
+            transform: scale(1.05);
+            border-radius: 12px;
+        }
+
+        .checkbox-wrapper-23 input + label svg {
+            pointer-events: none;
+            padding: 5%;
+        }
+
+        .checkbox-wrapper-23 input + label svg path {
+            fill: none;
+            stroke: #ec3d06;
+            stroke-width: 4px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 101;
+            transition: all 250ms cubic-bezier(1,0,.37,.91);
+        }
+
+        .checkbox-wrapper-23 .checkbox-text {
+            color: #888;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            user-select: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper-23 .checkbox-text:active {
+            transform: scale(0.98);
+        }
+
+        .checkbox-wrapper-23:hover .checkbox-text {
+            color: #aaa;
+        }
+
+        .checkbox-wrapper-23 input:checked ~ .checkbox-text {
+            color: #ec3d06;
+        }
+
         /* --- Main Layout --- */
         .main-container {
             display: grid;
@@ -136,6 +229,10 @@
             filter: grayscale(100%);
             transform: scale(0.95);
             box-shadow: none;
+        }
+
+        .hero-card.eliminated.hide-eliminated {
+            display: none;
         }
         
         .hero-card.hidden {
@@ -221,6 +318,16 @@
         <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Disabler" checked><span>Disabler</span></label>
         <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Escape" checked><span>Escape</span></label>
         <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Durable" checked><span>Durable</span></label>
+    </div>
+
+    <div class="checkbox-wrapper-23">
+        <input type="checkbox" id="showEliminatedCheckbox" checked>
+        <label for="showEliminatedCheckbox">
+            <svg viewBox="0,0,50,50">
+                <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
+        </label>
+        <label for="showEliminatedCheckbox" class="checkbox-text">Show Hidden</label>
     </div>
 
     <div style="margin-left: auto;">
@@ -324,6 +431,12 @@
             
             card.onclick = (e) => {
                 card.classList.toggle('eliminated');
+                
+                // Apply hide-eliminated class immediately if checkbox is unchecked
+                const showEliminated = document.getElementById('showEliminatedCheckbox').checked;
+                if (!showEliminated && card.classList.contains('eliminated')) {
+                    card.classList.add('hide-eliminated');
+                }
             };
             
             card.innerHTML = `
@@ -374,6 +487,19 @@
         });
     }
 
+    function toggleEliminatedVisibility() {
+        const showEliminated = document.getElementById('showEliminatedCheckbox').checked;
+        const eliminatedCards = document.querySelectorAll('.hero-card.eliminated');
+        
+        eliminatedCards.forEach(card => {
+            if (showEliminated) {
+                card.classList.remove('hide-eliminated');
+            } else {
+                card.classList.add('hide-eliminated');
+            }
+        });
+    }
+
     function setupEventListeners() {
         document.getElementById('searchInput').addEventListener('input', filterHeroes);
         
@@ -383,6 +509,15 @@
         
         document.querySelectorAll('.role-filter').forEach(cb => {
             cb.addEventListener('change', filterHeroes);
+        });
+
+        const checkbox = document.getElementById('showEliminatedCheckbox');
+        checkbox.addEventListener('change', toggleEliminatedVisibility);
+        
+        // Also add click handler to ensure it works
+        checkbox.addEventListener('click', function(e) {
+            // Let the default behavior happen, then trigger visibility update
+            setTimeout(toggleEliminatedVisibility, 0);
         });
     }
 

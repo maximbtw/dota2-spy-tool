@@ -6,13 +6,56 @@
     <title>Dota 2 Spy Tool</title>
     <style>
         :root {
+            /* Main colors */
             --bg-color: #1b1b1b;
             --card-bg: #252525;
             --text-color: #e0e0e0;
+            
+            /* Attribute colors */
             --str-color: #ec3d06;
             --agi-color: #26e030;
             --int-color: #00d9ec;
             --uni-color: #d89e0e;
+            
+            /* Accent colors */
+            --accent-red: #ec3d06;
+            --accent-red-dark: #bf1f1f;
+            --accent-red-darker: #442222;
+            --accent-red-darkest: #331818;
+            
+            /* UI colors */
+            --control-bg: #2b2b2b;
+            --control-border: #444;
+            --input-bg: rgba(0, 0, 0, 0.3);
+            --input-bg-hover: rgba(0, 0, 0, 0.5);
+            --input-bg-focus: rgba(0, 0, 0, 0.6);
+            --input-bg-dark: #111;
+            --input-bg-darker: #1a1a1a;
+            
+            /* Border colors */
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-medium: rgba(255, 255, 255, 0.2);
+            --border-dark: #333;
+            --border-darker: #444;
+            --border-darkest: #555;
+            --border-gray: #666;
+            
+            /* Text colors */
+            --text-light: white;
+            --text-gray: #aaa;
+            --text-gray-dark: #888;
+            --text-gray-darker: #777;
+            --text-gray-darkest: #666;
+            
+            /* Shadow colors */
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.5);
+            --shadow-dark: rgba(0, 0, 0, 0.7);
+            
+            /* Glow colors */
+            --glow-red: rgba(236, 61, 6, 0.3);
+            --glow-red-medium: rgba(236, 61, 6, 0.4);
+            --glow-red-strong: rgba(236, 61, 6, 0.5);
         }
 
         body {
@@ -27,11 +70,11 @@
         .controls {
             position: sticky;
             top: 0;
-            background: #2b2b2b;
+            background: var(--control-bg);
             padding: 15px;
-            border-bottom: 2px solid #444;
+            border-bottom: 2px solid var(--control-border);
             z-index: 100;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 6px var(--shadow-light);
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
@@ -43,9 +86,9 @@
         .search-box input {
             padding: 8px 12px;
             border-radius: 4px;
-            border: 1px solid #555;
-            background: #111;
-            color: white;
+            border: 1px solid var(--border-darkest);
+            background: var(--input-bg-dark);
+            color: var(--text-light);
             width: 200px;
         }
 
@@ -55,22 +98,22 @@
             align-items: center;
         }
 
-        .filter-label { font-weight: bold; color: #888; font-size: 0.9em; text-transform: uppercase;}
+        .filter-label { font-weight: bold; color: var(--text-gray-dark); font-size: 0.9em; text-transform: uppercase;}
 
         .checkbox-btn {
             cursor: pointer;
             user-select: none;
             padding: 5px 10px;
-            background: #333;
+            background: var(--border-dark);
             border-radius: 4px;
             font-size: 0.9em;
             transition: 0.2s;
-            border: 1px solid #444;
+            border: 1px solid var(--border-darker);
         }
-        .checkbox-btn:hover { background: #444; }
+        .checkbox-btn:hover { background: var(--border-darker); }
         .checkbox-btn input { display: none; }
-        .checkbox-btn input:checked + span { color: #fff; font-weight: bold; }
-        .checkbox-btn:has(input:checked) { background: #555; border-color: #888; }
+        .checkbox-btn input:checked + span { color: var(--text-light); font-weight: bold; }
+        .checkbox-btn:has(input:checked) { background: var(--border-darkest); border-color: var(--text-gray-dark); }
 
         /* Checkbox wrapper style */
         .checkbox-wrapper-23 {
@@ -106,19 +149,19 @@
 
         .checkbox-wrapper-23 input + label {
             display: block;
-            border: 2px solid #666;
+            border: 2px solid var(--border-gray);
             width: var(--size);
             height: var(--size);
             border-radius: 6px;
             cursor: pointer;
             transition: all .2s ease;
-            background: #1a1a1a;
+            background: var(--input-bg-darker);
         }
 
         .checkbox-wrapper-23 input:checked + label {
-            border-color: #ec3d06;
+            border-color: var(--accent-red);
             background: rgba(236, 61, 6, 0.1);
-            box-shadow: 0 0 12px rgba(236, 61, 6, 0.4);
+            box-shadow: 0 0 12px var(--glow-red-medium);
         }
 
         .checkbox-wrapper-23 input + label:active {
@@ -133,7 +176,7 @@
 
         .checkbox-wrapper-23 input + label svg path {
             fill: none;
-            stroke: #ec3d06;
+            stroke: var(--accent-red);
             stroke-width: 4px;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -143,7 +186,7 @@
         }
 
         .checkbox-wrapper-23 .checkbox-text {
-            color: #888;
+            color: var(--text-gray-dark);
             font-size: 0.9em;
             text-transform: uppercase;
             font-weight: bold;
@@ -158,11 +201,11 @@
         }
 
         .checkbox-wrapper-23:hover .checkbox-text {
-            color: #aaa;
+            color: var(--text-gray);
         }
 
         .checkbox-wrapper-23 input:checked ~ .checkbox-text {
-            color: #ec3d06;
+            color: var(--accent-red);
         }
 
         /* --- Main Layout --- */
@@ -205,7 +248,7 @@
 
         .hero-card {
             background: var(--card-bg);
-            border: 1px solid #333;
+            border: 1px solid var(--border-dark);
             border-radius: 6px;
             width: 140px;
             height: 180px;
@@ -213,15 +256,15 @@
             transition: all 0.2s ease;
             cursor: pointer;
             position: relative;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 5px var(--shadow-medium);
             display: flex;
             flex-direction: column;
         }
 
         .hero-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-            border-color: #666;
+            box-shadow: 0 5px 15px var(--shadow-dark);
+            border-color: var(--border-gray);
         }
         
         .hero-card.eliminated {
@@ -243,7 +286,7 @@
             width: 100%;
             height: 80px;
             object-fit: cover;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-dark);
         }
 
         .hero-info {
@@ -264,21 +307,21 @@
         }
 
         .hero-name a {
-            color: #fff;
+            color: var(--text-light);
             text-decoration: none;
-            border-bottom: 1px dotted #777;
+            border-bottom: 1px dotted var(--text-gray-darker);
         }
         .hero-name a:hover { color: #ffcc00; border-bottom: 1px solid #ffcc00; }
 
         .hero-stats {
-            color: #aaa;
+            color: var(--text-gray);
             line-height: 1.4;
             flex: 1;
             overflow: hidden;
         }
         .roles-tags {
             font-size: 0.75em;
-            color: #777;
+            color: var(--text-gray-darker);
             margin-top: 4px;
             font-style: italic;
             overflow: hidden;

@@ -84,8 +84,7 @@
             overflow-x: auto; 
             -webkit-overflow-scrolling: touch; 
         }
-
-
+        
         .search-box input {
             padding: 8px 12px;
             border-radius: 4px;
@@ -93,6 +92,14 @@
             background: var(--input-bg-dark);
             color: var(--text-light);
             width: 200px;
+
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 12px var(--glow-red-medium);
+            outline: none; 
         }
 
         .filter-group {
@@ -139,8 +146,15 @@
             transition: 0.2s;
             border: 1px solid var(--border-darker);
         }
-        .checkbox-btn:hover { background: var(--border-darker); }
-        .checkbox-btn input { display: none; }
+        .checkbox-btn:hover { 
+            background: var(--border-darker);
+            border-color: var(--accent-red);
+            box-shadow: 0 0 12px var(--glow-red-medium);
+            outline: none;
+        }
+        .checkbox-btn input { 
+            display: none; 
+        }
         .checkbox-btn input:checked + span { 
             color: var(--accent-red);
         }
@@ -377,7 +391,7 @@
     </div>
 
     <div class="filter-group">
-        <span class="filter-label">Atack:</span>
+        <span class="filter-label">Attack:</span>
         <label class="checkbox-btn">
             <input type="checkbox" name="attack_type" value="Melee" checked>
             <span>Melee</span>
@@ -396,6 +410,8 @@
         <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Disabler" checked><span>Disabler</span></label>
         <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Escape" checked><span>Escape</span></label>
         <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Durable" checked><span>Durable</span></label>
+        <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Pusher" checked><span>Pusher</span></label>
+        <label class="checkbox-btn"><input type="checkbox" class="role-filter" value="Initiator" checked><span>Initiator</span></label>
     </div>
 
     <div class="checkbox-wrapper-23">

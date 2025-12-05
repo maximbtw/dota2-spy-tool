@@ -453,36 +453,12 @@
 
     async function fetchHeroes() {
         try {
-            const response = await fetch('https://api.opendota.com/api/heroes');
-            const data = await response.json();
-            
-            heroesData = data.map(hero => {
+            const response = await fetch('./heroes.json');
+            heroesData = await response.json();
 
-                const attrMap = {
-                    'str': 'Strength',
-                    'agi': 'Agility',
-                    'int': 'Intelligence',
-                    'all': 'Universal'
-                };
-                
-                const heroSlug = hero.name.replace('npc_dota_hero_', '');
-                
-                return {
-                    id: hero.id,
-                    name: hero.name,
-                    localized_name: hero.localized_name,
-                    primary_attr: attrMap[hero.primary_attr] || 'Universal',
-                    attack_type: hero.attack_type,
-                    roles: hero.roles || [],
-                    legs: hero.legs || 2,
-                    url: `https://www.dota2.com/hero/${heroSlug.replace(/_/g, '')}`,
-                    imageUrl: `https://cdn.steamstatic.com/apps/dota2/images/dota_react/heroes/${heroSlug}.png`
-                };
-            });
-            
             return heroesData;
         } catch (error) {
-            console.error('Error fetching heroes:', error);
+            console.error('Error loading local heroes.json:', error);
             return [];
         }
     }
